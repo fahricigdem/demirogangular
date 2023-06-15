@@ -25,4 +25,7 @@ export class ProductAddComponent {
       categoryId: ['', Validators.required],
     });
   }
+  add() {
+    console.log();
+  }
 }
