@@ -1,0 +1,33 @@
+<p *ngIf="dataLoaded == false">loading...</p>
+
+<input id="idFilterText" [(ngModel)]="filterText" />
+<!-- <span *ngIf="filterText.length > 2">{{ filterText }}</span> -->
+
+<table class="table" *ngIf="dataLoaded == true">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Unit Price</th>
+      <th>Vat Price</th>
+      <th>In Stock</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products | filterPipe : filterText">
+      <td>{{ product.productId }}</td>
+      <td>{{ product.productName | uppercase }}</td>
+      <td>{{ product.categoryId }}</td>
+      <td>{{ product.unitPrice }}</td>
+      <td>{{ product.unitPrice | vatAdded : 18 | currency }}</td>
+      <td>{{ product.unitsInStock }}</td>
+      <td>
+        <button class="btn btn-success" (click)="addToCart(product)">
+          Sepete Ekle
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

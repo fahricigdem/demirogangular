@@ -1,0 +1,30 @@
+<li
+  *ngIf="cartItems && cartItems.length > 0"
+  class="nav-item dropdown"
+  (click)="isDropdownShown = !isDropdownShown"
+>
+  <a
+    class="nav-link dropdown-toggle"
+    [ngClass]="{ show: isDropdownShown }"
+    role="button"
+    data-toggle="dropdown"
+  >
+    Sepetiniz
+    <span class="badge bg-success"> {{ cartItems.length }}</span>
+  </a>
+  <ul class="dropdown-menu" [ngClass]="{ show: isDropdownShown }">
+    <li *ngFor="let item of cartItems">
+      <a class="dropdown-item">
+        {{ item.product.productName }} x {{ item.quantity }}
+        <span
+          class="badge bg-info"
+          style="display: inline-block"
+          (click)="deleteItemFromCart(item)"
+        >
+          sil
+        </span>
+      </a>
+    </li>
+    <li class="bg-info"><a class="dropdown-item">Sepete git</a></li>
+  </ul>
+</li>
