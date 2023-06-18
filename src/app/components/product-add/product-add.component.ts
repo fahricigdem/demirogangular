@@ -11,7 +11,6 @@ import { ProductService } from 'src/app/services/product.service';
 @Component({
   selector: 'app-product-add',
   templateUrl: './product-add.component.html',
-  styleUrls: ['./product-add.component.css'],
 })
 export class ProductAddComponent {
   productAddForm: FormGroup;
@@ -35,19 +34,34 @@ export class ProductAddComponent {
     if (this.productAddForm.valid) {
       let productModel = Object.assign({}, this.productAddForm.value);
       console.log({ productModel }.productModel);
-      this.productService.add(productModel).subscribe(
-        (response) => {
+      this.productService.add(productModel).subscribe({
+        next: (response) => {
           console.log(response);
           this.toastrService.success(response.message, 'Basarili');
         },
-        (responseError) => {
-          console.log('databank - error :');
+        error: (responseError) => {
+          console.log('-->databank - error');
+          console.log('responseError:');
           console.log(responseError);
+          console.log('responseError.error:');
           console.log(responseError.error);
+          console.log('responseError.error.Errors:');
+          console.log(responseError.error.Errors);
+          console.log('responseError.error.Message:');
           console.log(responseError.error.Message);
-          this.toastrService.error(responseError.error.Message, 'Dikkat');
-        }
-      );
+          if (responseError.error.Errors.length > 0) {
+            for (
+              let index = 0;
+              index < responseError.error.Errors.length;
+              index++
+            ) {
+              const element = responseError.error.Errors[index];
+              this.toastrService.error(element.ErrorMessage, 'Dikkat');
+            }
+          }
+        },
+        complete: () => console.info('complete'),
+      });
     } else {
       this.toastrService.error('form is not valid', 'Dikkat');
     }

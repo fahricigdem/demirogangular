@@ -7,7 +7,6 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-cart-summary',
   templateUrl: './cart-summary.component.html',
-  styleUrls: ['./cart-summary.component.css'],
 })
 export class CartSummaryComponent {
   isDropdownShown: boolean = false;
