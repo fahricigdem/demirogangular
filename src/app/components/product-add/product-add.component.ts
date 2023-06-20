@@ -43,13 +43,21 @@ export class ProductAddComponent {
           console.log('-->databank - error');
           console.log('responseError:');
           console.log(responseError);
-          console.log('responseError.error:');
-          console.log(responseError.error);
+          console.log('responseError.error.Message');
+          console.log(responseError.error.Message);
           console.log('responseError.error.Errors:');
           console.log(responseError.error.Errors);
-          console.log('responseError.error.Message:');
-          console.log(responseError.error.Message);
-          if (responseError.error.Errors.length > 0) {
+
+          if (responseError.error.Message) {
+            this.toastrService.error(responseError.error.Message, 'Dikkat');
+            console.log(responseError.error.Message);
+          }
+          if (responseError.error.message) {
+            this.toastrService.error(responseError.error.message, 'Dikkat');
+            console.log(responseError.error.message);
+          }
+
+          if (responseError.error.Errors) {
             for (
               let index = 0;
               index < responseError.error.Errors.length;

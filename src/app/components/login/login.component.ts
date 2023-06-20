@@ -5,6 +5,7 @@ import {
   Validators,
   FormBuilder,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -18,7 +19,8 @@ export class LoginComponent {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.createLoginForm();
@@ -42,9 +44,15 @@ export class LoginComponent {
             response.success ? 'Basarili' : 'Hatali',
             'Login Info'
           );
+          if (response.message) {
+            this.router.navigate(['products']);
+          }
           localStorage.setItem('token', response.data.token);
         },
-        error: (errorResponse) => console.log(errorResponse),
+        error: (errorResponse) => {
+          console.log(errorResponse.error);
+          this.toastrService.error(errorResponse.error, 'Dikkat!');
+        },
         complete: () => console.info('login completed'),
       });
     } else {
